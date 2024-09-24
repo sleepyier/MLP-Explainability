@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.headbar {
+    height: 10vh;
+    background-color: #4C956C;
+    color: #FEFEE3;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.info {
+    height: 60vh;
+    background-color: #FFC9B9;
+}
+
+.input_container {
+    height: 60vh;
+    background-color: #FEFEE3;
+}
