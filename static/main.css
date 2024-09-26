@@ -6,64 +6,70 @@
 }
 
 .headbar {
+    display: flex;
+    justify-content: space-between;
     height: 10vh;
-    background-color: #568CBA;
+    background-color: #32533D;
     color: #FEFEE3;
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
-    top: 0;
-    left:0;
     width: 100%;
+}
+.leftbar {
+    color: #FEFEE3;
+    background-color: #4a7157;
+    font-size: 12px;
+    flex-wrap: wrap;
+    align-content: center;
+    padding: 10px;
 }
 
 .info {
-    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
     width: 100;
     background-color: #FFFFFF;
 }
 
 .info h1 {
-    color: #373737;
+    color: #820933;
     position: relative;
-    top: 15vh;
-    left: 30vh;
+    top: 25vh;
+    left: 20vh;
     width: 100%;
     font-size: 45px;;
 }
-
-.info-box {
-    height: 30vh;
-    width: 70vh;
-    background-color: #568CBA;
-    border-radius: 15px;
+.info p {
     position: relative;
-    top: 16vh;
-    left: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #d7f6ff;
-    font-size: 18px;
-    padding: 2vh;
-    box-sizing: border-box;
-    margin-right: 2vh;
-}
-
-.contributors {
-    height: 30vh;
-    width: 30vh;
-    background-color: #92B6CC;
-    border-radius: 15px;
-    color: #d7f6ff;
-    position: relative;
-    top: 5vh;
-    left: 50vh;
-    font-size: 18px;
-    padding: 2vh;
-    box-sizing: border-box;
+    top: 22vh;
+    left: 21vh;
 }
 
 .input_container {
-    height: 60vh;
+    height: 160vh;
+    background-color: #e3dac9;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+.inputhead {
+    position: relative;
+    top: 10vh;
+    left: 20vh;
+    background-color: #4a7157;
+    color: #FFFFFF;
+    height: 20vh;
+    width: 35vh;
+}
+
+.inputfield {
+    position: relative;
+    top: 10vh;
+    left: 20vh;
     background-color: #FFFFFF;
+    height: 70vh;
+    width: 35vh;
 }
