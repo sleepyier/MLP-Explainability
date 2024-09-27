@@ -26,6 +26,7 @@
                 </head>
         </div>
         
+        <div class="inputresults">
         <div class='input_container'>
             <form action = "{{ url_for('main') }}" method = "POST">
             <div class='input'>
@@ -48,11 +49,35 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> 
+            <div class="results">
 
-        {% if result %}
-                <h2> {{ result }} </h2>
-        {% endif %}
+                    <div class="layer1">
+                        <h3>Layer 1</h3>
+                        {% if plot_url1 %}
+
+                        {% endif %}
+                    </div>
+
+                    <div class="layer2">
+                        <h3>Layer 2</h3>
+
+                        {% if plot_url2 %}
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="layer3">
+                        <h3>Layer 3</h3>
+
+                        {% if plot_url3 %}
+
+                        {% endif %}
+
+                    </div>
+            </div>
+        </div>
 
         <div class="interpretbox">
 

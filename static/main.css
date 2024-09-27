@@ -62,9 +62,16 @@ body, html {
     left: 21vh;
 }
 
-.input_container {
+.inputresults {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     height: 160vh;
     background-color: #e3dac9;
+}
+
+.input_container {
+    flex: 1 1 40%;
 }
 
 .input {
@@ -78,7 +85,7 @@ body, html {
     background-color: #4a7157;
     color: #FFFFFF;
     height: 20vh;
-    width: 20%;
+    width: 45%;
 }
 .inputhead h3 {
     margin-left: 4vh;
@@ -98,7 +105,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    width: 20%;
+    width: 45%;
     position: relative;
     left: 20vh;
     top: 10vh;
@@ -111,6 +118,26 @@ body, html {
     flex-direction: column;
     height: 80vh;
     padding: 30px;
+}
+
+.results {
+    display: flexbox;
+    flex-direction: column;
+    align-content: space-around;
+    height: 30vh;
+    width: 40%;
+    position: relative;
+    top: 3vh;
+    flex: 11 60%;
+}
+.layer1 {
+    background-color: #FEFEE3;
+}
+.layer2 {
+    background-color: #FEFEE3;
+}
+.layer3 {
+    background-color: #FEFEE3;
 }
 
 .interpretbox {

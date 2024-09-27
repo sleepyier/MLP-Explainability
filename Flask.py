@@ -9,6 +9,9 @@ import lime
 import lime.lime_tabular
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import io
+import base64
 
 df = pd.read_csv('final_haloc.csv')
 X = df.drop('RiskPerformance', axis=1)
@@ -46,6 +49,21 @@ def predict_layer_output(instance, model, layer_idx):
         elif layer_idx == 2:
             out3_np = out3.detach().numpy()
             return np.hstack([1 - out3_np, out3_np])
+        
+def plot_feat_importance(feat_importance):
+    features, importances = zip(*feat_importance)
+    plt.barh(features, importances)
+    plt.xlabel('Importance')
+    plt.ylabel('Features')
+    plt.title('Feature Importances')
+
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+    return plot_url
 
 explainer = lime.lime_tabular.LimeTabularExplainer(
     X_train.numpy(),
@@ -121,8 +139,9 @@ def main():
         local_prediction_output = exp_out3.local_pred
         predicted_proba_output = exp_out3.predict_proba
 
-        print("Output layer predicted probabilities:", predicted_proba_output)
-
+        plot_url1 = plot_feat_importance(feature_importances_layer1)
+        plot_url2 = plot_feat_importance(feature_importances_layer2)
+        plot_url3 = plot_feat_importance(feature_importances_output)
 
     return render_template('main.html')
 
