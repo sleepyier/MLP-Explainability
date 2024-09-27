@@ -7,7 +7,19 @@ import numpy as np
 import torch.nn.functional as F
 import lime
 import lime.lime_tabular
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
+df = pd.read_csv('final_haloc.csv')
+X = df.drop('RiskPerformance', axis=1)
+y = df['RiskPerformance']
+X = X.values
+y = y.values
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+X_train = torch.FloatTensor(X_train)
+X_test = torch.FloatTensor(X_test)
 
 class MLPNet(nn.Module): 
     def __init__(self):
@@ -22,7 +34,25 @@ class MLPNet(nn.Module):
         out2 = self.tanh(self.fc2(out1))
         out3 = torch.sigmoid(self.fc3(out2))
         return out1, out2, out3
+    
+def predict_layer_output(instance, model, layer_idx):
+    instance = torch.tensor(instance).float()
+    with torch.no_grad():
+        out1, out2, out3 = model(instance)
+        if layer_idx == 0:
+            return out1.detach().numpy()
+        elif layer_idx == 1:
+            return out2.detach().numpy()
+        elif layer_idx == 2:
+            out3_np = out3.detach().numpy()
+            return np.hstack([1 - out3_np, out3_np])
 
+explainer = lime.lime_tabular.LimeTabularExplainer(
+    X_train.numpy(),
+    feature_names=['feat1', 'feat2', 'feat3', 'feat4', 'feat5'],
+    class_names=['output'],
+    mode='classification'
+)
 
 app = Flask(__name__)
 
@@ -67,10 +97,31 @@ def main():
 
         print(feat1)
 
-        user_features = [[feat1, feat2, feat3, feat4, feat5]]
+        user_features = np.array([feat1, feat2, feat3, feat4, feat5])
 
         with torch.no_grad():
             prediction = model(torch.tensor(user_features, dtype=torch.float32))
+
+
+        # Layer 1 explanation
+        exp_out1 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=0))
+        feature_importances_layer1 = exp_out1.as_list()
+        local_prediction_layer1 = exp_out1.local_pred
+        predicted_proba_layer1 = exp_out1.predict_proba
+
+        # Layer 2 explanation
+        exp_out2 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=1))
+        feature_importances_layer2 = exp_out2.as_list()
+        local_prediction_layer2 = exp_out2.local_pred
+        predicted_proba_layer2 = exp_out2.predict_proba
+
+        # Output layer explanation
+        exp_out3 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=2))
+        feature_importances_output = exp_out3.as_list()
+        local_prediction_output = exp_out3.local_pred
+        predicted_proba_output = exp_out3.predict_proba
+
+        print("Output layer predicted probabilities:", predicted_proba_output)
 
 
     return render_template('main.html')
@@ -78,3 +129,4 @@ def main():
 
 if __name__ == '__main__':
     app.run(debug=True)
+        
