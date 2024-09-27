@@ -55,7 +55,9 @@
                     <div class="layer1">
                         <h3>Layer 1</h3>
                         {% if plot_url1 %}
-
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot1 }}" alt="Layer 1 Feature Importance">
+                        </div>
                         {% endif %}
                     </div>
 
@@ -63,16 +65,20 @@
                         <h3>Layer 2</h3>
 
                         {% if plot_url2 %}
-
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot2 }}" alt="Layer 2 Feature Importance">
+                        </div>
                         {% endif %}
 
                     </div>
 
-                    <div class="layer3">
+                    <div class="Prediction">
                         <h3>Layer 3</h3>
 
                         {% if plot_url3 %}
-
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot3 }}" alt="Output Feature Importance">
+                        </div>
                         {% endif %}
 
                     </div>

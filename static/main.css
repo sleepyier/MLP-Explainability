@@ -132,10 +132,15 @@ body, html {
 }
 .layer1 {
     background-color: #FEFEE3;
+    height: 100%;
 }
+
+
 .layer2 {
     background-color: #FEFEE3;
 }
+
+
 .layer3 {
     background-color: #FEFEE3;
 }

@@ -9,9 +9,11 @@ import lime
 import lime.lime_tabular
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
 import io
 import base64
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('final_haloc.csv')
 X = df.drop('RiskPerformance', axis=1)
@@ -113,8 +115,6 @@ def main():
         feat4 = float(request.form.get('feat4'))
         feat5 = float(request.form.get('feat5'))
 
-        print(feat1)
-
         user_features = np.array([feat1, feat2, feat3, feat4, feat5])
 
         with torch.no_grad():
@@ -143,7 +143,9 @@ def main():
         plot_url2 = plot_feat_importance(feature_importances_layer2)
         plot_url3 = plot_feat_importance(feature_importances_output)
 
-    return render_template('main.html')
+        return render_template('main.html', plot1 = plot_url1, plot2 = plot_url2, plot3 = plot_url3)
+    else:
+        return render_template('main.html')
 
 
 if __name__ == '__main__':
