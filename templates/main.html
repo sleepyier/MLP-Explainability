@@ -27,7 +27,7 @@
         </div>
         
         <div class='input_container'>
-
+            <form action = "{{ url_for('main') }}" method = "POST">
             <div class='input'>
                 <div class='inputhead'>
                     <h3>Input your parameters<br>to get started</h3>
@@ -37,20 +37,22 @@
                     </div>
                 </div>
 
-                <div class="inputfield">
+                    <div class="inputfield">
 
-                    <form>
-                        
-                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1"><br>
-                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2"><br>
-                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3"><br>
-                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4"><br>
-                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5"><br>
-                    </form>
-
+                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required><br>
+                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required><br>
+                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required><br>
+                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required><br>
+                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required><br>
+                    
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
+
+        {% if result %}
+                <h2> {{ result }} </h2>
+        {% endif %}
 
         <div class="interpretbox">
 
