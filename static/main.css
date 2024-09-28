@@ -133,17 +133,30 @@ body, html {
 .layer1 {
     background-color: #FEFEE3;
     height: 100%;
+    width: 80%;
 }
 
+table {
+    border-collapse: collapse;
+}
 
 .layer2 {
     background-color: #FEFEE3;
+    height: 100%;
+    width: 80%;
 }
 
-
-.layer3 {
+.prediction {
     background-color: #FEFEE3;
+    height: 100%;
+    width: 80%;
 }
+
+.inner {
+    display: flex;
+    flex-direction: row;
+}
+
 
 .interpretbox {
     display: flex;

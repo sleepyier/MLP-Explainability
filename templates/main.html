@@ -54,32 +54,29 @@
 
                     <div class="layer1">
                         <h3>Layer 1</h3>
-                        {% if plot_url1 %}
-                        <div class='plot'>
-                            <img src="data:image/png;base64,{{ plot1 }}" alt="Layer 1 Feature Importance">
+                        <div class="inner">
+                            {{layer1_import | safe}}
+                            <h3>{{confidence1}}</h3>
                         </div>
-                        {% endif %}
                     </div>
 
                     <div class="layer2">
                         <h3>Layer 2</h3>
 
-                        {% if plot_url2 %}
-                        <div class='plot'>
-                            <img src="data:image/png;base64,{{ plot2 }}" alt="Layer 2 Feature Importance">
+                        <div class="inner">
+                            {{layer2_import | safe}}
+                            <h3>{{confidence2}}</h3>
                         </div>
-                        {% endif %}
 
                     </div>
 
-                    <div class="Prediction">
-                        <h3>Layer 3</h3>
-
-                        {% if plot_url3 %}
-                        <div class='plot'>
-                            <img src="data:image/png;base64,{{ plot3 }}" alt="Output Feature Importance">
+                    <div class="prediction">
+                        <h3>Output</h3>
+                        
+                        <div class="inner">
+                            {{output_import | safe}}
+                            <h3>{{confidenceout}}</h3>
                         </div>
-                        {% endif %}
 
                     </div>
             </div>

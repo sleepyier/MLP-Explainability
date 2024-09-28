@@ -53,20 +53,56 @@ def predict_layer_output(instance, model, layer_idx):
             out3_np = out3.detach().numpy()
             return np.hstack([1 - out3_np, out3_np])
         
+def format_importance(featimport):
+    features, importances = zip(*featimport)
+
+    feature_order = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5']
+    
+    feature_names_mapping = {
+        'feat1': 'RiskEstimate',
+        'feat2': 'NetFractionRevolvingBurden',
+        'feat3': 'AverageMinFile',
+        'feat4': 'PercentInstallTrades',
+        'feat5': 'NumSatisfactoryTrades'
+    }
+
+    ordered_importance = sorted(zip(features, importances), key=lambda x: feature_order.index(x[0].split(' ')[0]))
+
+    table_html = "<table border='1'>\n"
+    table_html += "<tr><th>Feature</th><th>Importance</th></tr>\n"
+
+    for feature, importance in ordered_importance:
+        
+        feature_name = feature.split(' ')[0]
+        feature_name = feature_names_mapping.get(feature_name, feature_name)
+
+        table_html += f"<tr><td>{feature_name}</td><td>{importance:.6f}</td></tr>\n"
+
+    table_html += "</table>"
+    
+    return table_html
+
+        
 def plot_feat_importance(feat_importance):
+    plt.figure()
+
     features, importances = zip(*feat_importance)
+
     plt.barh(features, importances)
     plt.xlabel('Importance')
     plt.ylabel('Features')
     plt.title('Feature Importances')
+    plt.gca().invert_yaxis()
+    plt.show()
 
     img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
-    plt.close()
+    plot_data = img.read()
 
-    plot_url = base64.b64encode(img.getvalue()).decode('utf8')
-    return plot_url
+    plot_url = base64.b64encode(plot_data).decode('utf8')
+    plt.close()
+    return f"data:image/png;base64,{plot_url}"
 
 explainer = lime.lime_tabular.LimeTabularExplainer(
     X_train.numpy(),
@@ -104,12 +140,11 @@ def test():
     return render_template('test.html', result = result)
 
 
-
-
 @app.route('/main', methods = ['GET', 'POST'])
 def main():
     result = None
     if request.method == 'POST':
+
         feat1 = float(request.form.get('feat1'))
         feat2 = float(request.form.get('feat2'))
         feat3 = float(request.form.get('feat3'))
@@ -125,26 +160,26 @@ def main():
         # Layer 1 explanation
         exp_out1 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=0))
         feature_importances_layer1 = exp_out1.as_list()
-        local_prediction_layer1 = exp_out1.local_pred
         predicted_proba_layer1 = exp_out1.predict_proba
 
         # Layer 2 explanation
         exp_out2 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=1))
         feature_importances_layer2 = exp_out2.as_list()
-        local_prediction_layer2 = exp_out2.local_pred
         predicted_proba_layer2 = exp_out2.predict_proba
 
         # Output layer explanation
         exp_out3 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=2))
         feature_importances_output = exp_out3.as_list()
-        local_prediction_output = exp_out3.local_pred
         predicted_proba_output = exp_out3.predict_proba
 
-        plot_url1 = plot_feat_importance(feature_importances_layer1)
-        plot_url2 = plot_feat_importance(feature_importances_layer2)
-        plot_url3 = plot_feat_importance(feature_importances_output)
+        layer1import = format_importance(feature_importances_layer1)
+        layer2import = format_importance(feature_importances_layer2)
+        outimport = format_importance(feature_importances_output)
+        
 
-        return render_template('main.html', plot1 = plot_url1, plot2 = plot_url2, plot3 = plot_url3)
+
+
+        return render_template('main.html', layer1_import=layer1import, layer2_import=layer2import, output_import=outimport, confidence1=max(predicted_proba_layer1), confidence2=max(predicted_proba_layer2), confidenceout=max(predicted_proba_output))
     else:
         return render_template('main.html')
 
