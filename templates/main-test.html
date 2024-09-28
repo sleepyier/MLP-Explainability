@@ -28,7 +28,7 @@
         
         <div class="inputresults">
         <div class='input_container'>
-            <form action = "{{ url_for('main') }}" method = "POST">
+            <form action = "{{ url_for('maintest') }}" method = "POST">
             <div class='input'>
                 <div class='inputhead'>
                     <h3>Input your parameters<br>to get started</h3>
@@ -57,6 +57,7 @@
                         {% if plot_url1 %}
                         <div class='plot'>
                             <img src="data:image/png;base64,{{ plot1 }}" alt="Layer 1 Feature Importance">
+                            <h6> {{ plot1 }} </h6>
                         </div>
                         {% endif %}
                     </div>
@@ -67,6 +68,7 @@
                         {% if plot_url2 %}
                         <div class='plot'>
                             <img src="data:image/png;base64,{{ plot2 }}" alt="Layer 2 Feature Importance">
+                            <h6> {{ plot2 }}</h6>
                         </div>
                         {% endif %}
 
@@ -78,6 +80,7 @@
                         {% if plot_url3 %}
                         <div class='plot'>
                             <img src="data:image/png;base64,{{ plot3 }}" alt="Output Feature Importance">
+                            <h6> {{ plot3 }}</h6>
                         </div>
                         {% endif %}
 

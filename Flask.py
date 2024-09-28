@@ -148,7 +148,51 @@ def main():
     else:
         return render_template('main.html')
 
+## THIS IS SOME OF THE TESTING STUFF I AM DOING BELOW
 
+@app.route('/main-test', methods = ['GET', 'POST'])
+def maintest():
+    result = None
+    if request.method == 'POST':
+        feat1 = float(request.form.get('feat1'))
+        feat2 = float(request.form.get('feat2'))
+        feat3 = float(request.form.get('feat3'))
+        feat4 = float(request.form.get('feat4'))
+        feat5 = float(request.form.get('feat5'))
+
+        user_features = np.array([feat1, feat2, feat3, feat4, feat5])
+
+        with torch.no_grad():
+            prediction = model(torch.tensor(user_features, dtype=torch.float32))
+
+
+        # Layer 1 explanation
+        exp_out1 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=0))
+        feature_importances_layer1 = exp_out1.as_list()
+        local_prediction_layer1 = exp_out1.local_pred
+        predicted_proba_layer1 = exp_out1.predict_proba
+
+        # Layer 2 explanation
+        exp_out2 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=1))
+        feature_importances_layer2 = exp_out2.as_list()
+        local_prediction_layer2 = exp_out2.local_pred
+        predicted_proba_layer2 = exp_out2.predict_proba
+
+        # Output layer explanation
+        exp_out3 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=2))
+        feature_importances_output = exp_out3.as_list()
+        local_prediction_output = exp_out3.local_pred
+        predicted_proba_output = exp_out3.predict_proba
+    
+        #plot_url1 = plot_feat_importance(feature_importances_layer1)
+        #plot_url2 = plot_feat_importance(feature_importances_layer2)
+        #plot_url3 = plot_feat_importance(feature_importances_output)
+        #plots = plot_url1, plot_url2, plot_url3
+
+
+        return render_template('main-test.html', plot1 = local_prediction_layer1, plot2 = local_prediction_layer2, plot3 = local_prediction_output )
+    else:
+        return render_template('main-test.html')
 if __name__ == '__main__':
     app.run(debug=True)
         
