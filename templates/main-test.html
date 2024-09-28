@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    <div class='headbar'>
+        <head>
+            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CSDS: WIL Project</title>
+        </head>
+
+        <h1>Financial Predictor</h1>
+
+        <div class="leftbar">
+            <h3>Case Studies<br>in Data Science</h3>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class='info'>
+                <head>
+                    <h1>Understanding Your Credit</h1>
+                        <p>This is the description of the model and how to use it.</p>
+                </head>
+        </div>
+        
+        <div class="inputresults">
+        <div class='input_container'>
+            <form action = "{{ url_for('main') }}" method = "POST">
+            <div class='input'>
+                <div class='inputhead'>
+                    <h3>Input your parameters<br>to get started</h3>
+
+                    <div class="run">
+                        <button type="submit" class="btn btn-primary">Run</button>
+                    </div>
+                </div>
+
+                    <div class="inputfield">
+
+                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required><br>
+                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required><br>
+                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required><br>
+                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required><br>
+                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required><br>
+                    
+                    </div>
+                </div>
+            </form>
+        </div> 
+            <div class="results">
+
+                    <div class="layer1">
+                        <h3>Layer 1</h3>
+                        {% if plot_url1 %}
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot1 }}" alt="Layer 1 Feature Importance">
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="layer2">
+                        <h3>Layer 2</h3>
+
+                        {% if plot_url2 %}
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot2 }}" alt="Layer 2 Feature Importance">
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="Prediction">
+                        <h3>Layer 3</h3>
+
+                        {% if plot_url3 %}
+                        <div class='plot'>
+                            <img src="data:image/png;base64,{{ plot3 }}" alt="Output Feature Importance">
+                        </div>
+                        {% endif %}
+
+                    </div>
+            </div>
+        </div>
+
+        <div class="interpretbox">
+
+            <h3>Understanding your results</h3>
+            <p>This is a description of the results of our model</p>
+    
+        </div>
+
+        <div class="contributors"></div>
+            <h3>Contributors</h3>
+        <p>Nam Duong <br> Vince Quach <br> Arjun Prasad <br> Hannah Mac <br> Neda Nikkhah Bahrami</p>
+        </div>
+
+    </div>
+</body>
+
+</html>
