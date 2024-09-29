@@ -153,33 +153,57 @@ def main():
 
         user_features = np.array([feat1, feat2, feat3, feat4, feat5])
 
+
         with torch.no_grad():
-            prediction = model(torch.tensor(user_features, dtype=torch.float32))
+            _, _, final_output = model(torch.tensor(user_features, dtype=torch.float32))
+            prediction = final_output.numpy()
+            final_prediction = (prediction > 0.5).astype(int)[0]
+
+        if final_prediction == 0:
+            final_prediction = "Bad Credit Risk"
+        else:
+            final_prediction = "Good Credit Risk"
+        
 
 
         # Layer 1 explanation
         exp_out1 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=0))
         feature_importances_layer1 = exp_out1.as_list()
+        local_prediction_layer1 = exp_out1.local_pred
         predicted_proba_layer1 = exp_out1.predict_proba
 
         # Layer 2 explanation
         exp_out2 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=1))
         feature_importances_layer2 = exp_out2.as_list()
+        local_prediction_layer2 = exp_out2.local_pred
         predicted_proba_layer2 = exp_out2.predict_proba
 
         # Output layer explanation
         exp_out3 = explainer.explain_instance(user_features, lambda x: predict_layer_output(x, model, layer_idx=2))
         feature_importances_output = exp_out3.as_list()
+        local_prediction_output = exp_out3.local_pred
         predicted_proba_output = exp_out3.predict_proba
 
         layer1import = format_importance(feature_importances_layer1)
         layer2import = format_importance(feature_importances_layer2)
         outimport = format_importance(feature_importances_output)
+
+        predicted_proba_layer1 = max(predicted_proba_layer1) * 100
+        predicted_proba_layer2 = max(predicted_proba_layer2) * 100
+        predicted_proba_output = predicted_proba_output[0] * 100
+
+        predicted_proba_layer1 = f"{predicted_proba_layer1:.2f}"
+        predicted_proba_layer2 = f"{predicted_proba_layer2:.2f}"
+        predicted_proba_output = f"{predicted_proba_output:.2f}"
+    
         
+        local_prediction_layer1 = local_prediction_layer1[0]
+        local_prediction_layer2 = local_prediction_layer2[0]
+        local_prediction_output = local_prediction_output[0]
 
 
 
-        return render_template('main.html', layer1_import=layer1import, layer2_import=layer2import, output_import=outimport, confidence1=max(predicted_proba_layer1), confidence2=max(predicted_proba_layer2), confidenceout=max(predicted_proba_output))
+        return render_template('main.html', layer1_import=layer1import, layer2_import=layer2import, output_import=outimport, confidence1=predicted_proba_layer1, confidence2=predicted_proba_layer2, confidenceout=predicted_proba_output, localpred1=local_prediction_layer1, localpred2=local_prediction_layer2, localpredout=local_prediction_output, prediction=final_prediction)
     else:
         return render_template('main.html')
 

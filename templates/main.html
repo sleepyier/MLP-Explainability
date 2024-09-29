@@ -25,13 +25,13 @@
                         <p>This model is designed to help you understand how financial institutions may assess your credit eligibility. The model evaluates key financial factors to predict whether you are likely to be considered a good or bad credit risk by lenders.<br><br>
                             Input Your Data: You’ll need to provide key financial information for the model to evaluate.<br><br>
                             
-                            View Your Eligibility Score: The model will analyze your data and give you a prediction on whether you may be classified as a good or bad credit risk.<br><br>
+                            View Your Eligibility: The model will analyze your data and give you a prediction on whether you may be classified as a good or bad credit risk.<br><br>
                             
                             Understand the Factors: The model will highlight which financial factors impact your score, helping you understand where to focus to improve your chances of approval.</p>
                 </head>
         </div>
         
-        <div class="inputresults">
+    <div class="inputresults">
         <div class='input_container'>
             <form action = "{{ url_for('main') }}" method = "POST">
             <div class='input'>
@@ -45,23 +45,34 @@
 
                     <div class="inputfield">
 
-                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required><br>
-                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required><br>
-                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required><br>
-                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required><br>
-                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required><br>
+                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required max="100"><br>
+                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required max="150"><br>
+                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required max="200"><br>
+                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required max="100"><br>
+                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required max="100"><br>
                     
                     </div>
                 </div>
             </form>
         </div> 
             <div class="results">
+                    <div class="prediction">
+                        <p>You have been assessed to have:</p>
+                        <h3>{{prediction}}</h3>
+                    </div>
 
                     <div class="layer1">
                         <h3>Layer 1</h3>
                         <div class="inner">
                             {{layer1_import | safe}}
-                            <h3>{{confidence1}}</h3>
+                            <div class="confidence">
+                                <p>Model Confidence</p>
+                                <h3>{{confidence1}}%</h3>
+                            </div>
+                            <div class="localpred">
+                                <p>Local Prediction</p>
+                                <h3>{{localpred1}}</h3>
+                            </div>
                         </div>
                     </div>
 
@@ -70,17 +81,31 @@
 
                         <div class="inner">
                             {{layer2_import | safe}}
-                            <h3>{{confidence2}}</h3>
+                            <div class="confidence">
+                                <p>Model Confidence</p>
+                                <h3>{{confidence2}}%</h3>
+                            </div>
+                            <div class="localpred">
+                                <p>Local Prediction</p>
+                                <h3>{{localpred2}}</h3>
+                            </div>
                         </div>
 
                     </div>
 
-                    <div class="prediction">
+                    <div class="output">
                         <h3>Output</h3>
                         
                         <div class="inner">
                             {{output_import | safe}}
-                            <h3>{{confidenceout}}</h3>
+                            <div class="confidence">
+                                <p>Model Confidence</p>
+                                <h3>{{confidenceout}}%</h3>
+                            </div>
+                            <div class="localpred">
+                                <p>Local Prediction</p>
+                                <h3>{{localpredout}}</h3>
+                            </div>
                         </div>
 
                     </div>
