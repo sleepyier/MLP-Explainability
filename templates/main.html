@@ -45,11 +45,11 @@
 
                     <div class="inputfield">
 
-                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required max="100"><br>
-                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required max="150"><br>
-                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required max="200"><br>
-                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required max="100"><br>
-                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required max="100"><br>
+                        <label for="feat1">Risk Estimate</label><br><input type="number" id="feat1" name="feat1" required max="100" value="{{ feat1 | default(72) }}"><br>
+                        <label for="feat2">NetFractionRevolvingBurden</label><br><input type="number" id="feat2" name="feat2" required max="150" value="{{ feat2 | default(43) }}"><br>
+                        <label for="feat3">AverageMinFile</label><br><input type="number" id="feat3" name="feat3" required max="200" value="{{ feat3 | default(53) }}"><br>
+                        <label for="feat4">PercentInstallTrades</label><br><input type="number" id="feat4" name="feat4" required max="100" value="{{ feat4 | default(27) }}"><br>
+                        <label for="feat5">NumSatisfactoryTrades</label><br><input type="number" id="feat5" name="feat5" required max="100" value="{{ feat5 | default(29) }}"><br>
                     
                     </div>
                 </div>
@@ -119,10 +119,14 @@
     
         </div>
 
-        <div class="contributors"></div>
+        <div class="contributors">
             <h3>Contributors</h3>
-        <p>Nam Duong <br> Vince Quach <br> Arjun Prasad <br> Hannah Mac <br> Neda Nikkhah Bahrami</p>
+            <p>Nam Duong    |   Vince Quach     |    Arjun Prasad   |   Hannah Mac  |   Neda Nikkhah Bahrami</p>
         </div>
+
+    </div>
+
+    <div class="footer">
 
     </div>
 </body>

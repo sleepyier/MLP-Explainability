@@ -122,6 +122,18 @@ body, html {
     height: 80vh;
     padding: 30px;
 }
+.inputfield label {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    padding: 0;
+}
+.inputfield input {
+    margin-left: 2vh;
+    margin-right: 2vh;
+    padding: 5px;
+}
 
 .results {
     display: flex;
@@ -213,14 +225,16 @@ tr:nth-child(even) {
     background-color: #FFFFFF;
 }
 .confidence h3 {
-    position: relative;
-    top: 0vh;
+    width: 50%;
 }
 .localpred {
     display: flex;
     flex-direction: column;
     text-align: center;
     background-color: #FFFFFF;
+}
+.localpred h3 {
+    width: 50%;
 }
 
 .interpretbox {
@@ -243,4 +257,28 @@ tr:nth-child(even) {
 .interpretbox p {
     margin-left: 5vh;
     margin-top: 5vh;
+}
+
+.contributors {
+    height: 25vh;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    left: 15vh;
+    top: 5vh;
+    font-size: 2.5vh;
+}
+.contributors h3 {
+    color: #820933;
+}
+
+.footer {
+    height: 10vh;
+    background-color: #32533D;
+    color: #FEFEE3;
+    position: absolute;
+    width: 100%;
 }
