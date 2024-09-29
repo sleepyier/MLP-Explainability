@@ -22,7 +22,7 @@
         <div class='info'>
                 <head>
                     <h1>Understanding Your Credit</h1>
-                        <p>This model is designed to help you understand how financial institutions may assess your credit eligibility. The model evaluates key financial factors to predict whether you are likely to be considered a good or bad credit risk by lenders.<br><br>
+                        <p>This Multilayer Perceptron Neural Network Model is designed to help you understand how financial institutions may assess your credit eligibility. It evaluates key financial factors to predict whether you are likely to be considered a good or bad credit risk by lenders.<br><br>
                             Input Your Data: You’ll need to provide key financial information for the model to evaluate.<br><br>
                             
                             View Your Eligibility: The model will analyze your data and give you a prediction on whether you may be classified as a good or bad credit risk.<br><br>
@@ -115,8 +115,28 @@
         <div class="interpretbox">
 
             <h3>Understanding your results</h3>
-            <p>This is a description of the results of our model</p>
-    
+                <p>
+                    <strong>Credit Risk Prediction:</strong><br>
+                    Based on your input, the model predicts whether you're a good or bad credit risk.<br><br>
+                    
+                    <strong>Model Confidence:</strong><br>
+                    The confidence score shows how sure the model is about its prediction. Higher percentages mean greater confidence.<br><br>
+                    
+                    <strong>Feature Importance:</strong><br>
+                    Each layer of the model processes your data to highlight key factors influencing the prediction. Negative feature importances indicate that those features reduce the likelihood of being classified as a good credit risk, highlighting factors that may increase the risk of being considered a bad credit risk:<br>
+                    - <em>Layer 1:</em> Focuses on your raw data inputs.<br>
+                    - <em>Layer 2:</em> Refines patterns and interactions between factors.<br>
+                    - <em>Output Layer:</em> Combines all insights for the final decision.<br><br>
+
+                    <strong>Local Prediction:</strong><br>
+                    This shows how your data influences the model at each layer. Positive values indicate a prediction for good credit risk, while negative values suggest bad credit risk:<br>
+                    - <em>Layer 1:</em> Highlights important raw data.<br>
+                    - <em>Layer 2:</em> Combines data points to refine the prediction.<br>
+                    - <em>Output Layer:</em> Makes the final decision.<br><br>
+
+                    <strong>Important:</strong><br>
+                    The local prediction at the output layer may differ from the overall prediction shown at the top. This is because the overall prediction considers the combined impact of all layers and the model's decision-making process, while the local prediction focuses on specific factors at the output layer.
+                </p>
         </div>
 
         <div class="contributors">

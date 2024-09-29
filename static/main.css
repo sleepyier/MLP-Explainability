@@ -245,7 +245,7 @@ tr:nth-child(even) {
     left: 20vh;
     color: #FFFFFF;
     width: 80%;
-    height: 40vh;
+    height: 75vh;
     margin-top: -20vh;
     text-align: left;
 }
@@ -256,7 +256,7 @@ tr:nth-child(even) {
 }
 .interpretbox p {
     margin-left: 5vh;
-    margin-top: 5vh;
+    margin-top: -3vh;
 }
 
 .contributors {
@@ -281,4 +281,10 @@ tr:nth-child(even) {
     color: #FEFEE3;
     position: absolute;
     width: 100%;
+}
+
+button {
+    background-color: #FEFEE3;
+    border: none;
+    box-shadow: 3px 3px #32533D;
 }

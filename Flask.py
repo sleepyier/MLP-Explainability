@@ -68,15 +68,17 @@ def format_importance(featimport):
 
     ordered_importance = sorted(zip(features, importances), key=lambda x: feature_order.index(x[0].split(' ')[0]))
 
+    total_importance = sum(abs(imp) for imp in importances)
+    importance_percentages = [(imp / total_importance) * 100 for imp in importances]
+
     table_html = "<table border='1'>\n"
     table_html += "<tr><th>Feature</th><th>Importance</th></tr>\n"
 
-    for feature, importance in ordered_importance:
-        
+    for (feature, importance), percentage in zip(ordered_importance, importance_percentages):
         feature_name = feature.split(' ')[0]
         feature_name = feature_names_mapping.get(feature_name, feature_name)
-
-        table_html += f"<tr><td>{feature_name}</td><td>{importance:.6f}</td></tr>\n"
+        
+        table_html += f"<tr><td>{feature_name}</td><td>{percentage:.2f}%</td></tr>\n"
 
     table_html += "</table>"
     
@@ -153,10 +155,10 @@ def main():
 
     with torch.no_grad():
         _, _, final_output = model(torch.tensor(user_features, dtype=torch.float32))
-        prediction = final_output.numpy()
-        final_prediction = (prediction > 0.5).astype(int)[0]
+        final_output = torch.sigmoid(final_output)
+        final_prediction = final_output.item() 
 
-    if final_prediction == 0:
+    if final_prediction < 0.5:
         final_prediction = "Bad Credit Risk"
     else:
         final_prediction = "Good Credit Risk"
